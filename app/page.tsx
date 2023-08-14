@@ -1,6 +1,6 @@
-import DefaultNavbar from 'components/navigation'
-import SearchForm from 'components/searchForm'
-import Footer from 'components/footer'
+import DefaultNavbar from '../components/navigation';
+import SearchForm from '../components/searchForm'
+import Footer from '../components/footer'
 
 export default function Home() {
 
@@ -31,14 +31,14 @@ export default function Home() {
           </div>
           <div className="max-w-xl mb-10 md:mx-auto sm:text-center lg:max-w-2xl md:mb-10">
             <h2 className="max-w-lg mb-6 font-sans text-3xl font-bold leading-none tracking-tight text-gray-900 sm:text-4xl md:mx-auto text-center">
-              Quick and easy access to Damodaran's datasets
+              Quick and easy access to Damodaran&apos;s datasets
             </h2>
             <p className="text-base text-gray-700 md:text-lg text-center">
-              A simplified gateway to access Professor Aswath Damodaran's datasets, saving you time to fast-track your valuations and corporate finance analysis.
+              A simplified gateway to access Professor Aswath Damodaran&apos;s datasets, saving you time to fast-track your valuations and corporate finance analysis.
             </p>
           </div>
-          <div class="p-4 text-sm text-yellow-800 rounded-lg bg-yellow-50 dark:bg-gray-800 dark:text-yellow-300 text-center" role="alert">
-            Explore Professor Damodaran's official website to find usage guidelines and insights into the data structure.{' '}<a href="https://pages.stern.nyu.edu/~adamodar/New_Home_Page/data.html" target="_blank" className="font-semibold">
+          <div className="p-4 text-sm text-yellow-800 rounded-lg bg-yellow-50 dark:bg-gray-800 dark:text-yellow-300 text-center" role="alert">
+            Explore Professor Damodaran&apos;s official website to find usage guidelines and insights into the data structure.{' '}<a href="https://pages.stern.nyu.edu/~adamodar/New_Home_Page/data.html" target="_blank" className="font-semibold">
               <span className="" aria-hidden="true" />
               Read more <span aria-hidden="true">&rarr;</span>
             </a>

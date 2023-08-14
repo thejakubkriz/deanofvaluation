@@ -1,18 +1,33 @@
 import React, { useState, forwardRef, useEffect } from 'react';
 import { Workbook } from 'exceljs';
+import {
+  DataItem,
+  GroupedDataItem,
+  SelectOption,
+  ProcessedDataItem,
+  MetricValueTableProps
+} from '../components/types';
 
-const MetricValueTable = forwardRef(({ data }, ref) => {
+const MetricValueTable = forwardRef(({ data }: MetricValueTableProps, ref: React.Ref<HTMLDivElement>) => {
   const ITEMS_PER_PAGE = 30;
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = Math.ceil(data.length / ITEMS_PER_PAGE);
 
-  const metricNames = [...new Set(data.flatMap(item => Object.keys(item).filter(key => !['year', 'region', 'industry'].includes(key))))];
+  const metricNamesSet = new Set<string>();
+  data.forEach(item => {
+    Object.keys(item).forEach(key => {
+      if (!['year', 'region', 'industry'].includes(key)) {
+        metricNamesSet.add(key);
+      }
+    });
+  });
+  const metricNames = Array.from(metricNamesSet);
 
   useEffect(() => {
-    if (ref.current) {
-      ref.current.scrollIntoView({ behavior: 'smooth' });
+    if ((ref as React.MutableRefObject<unknown>).current) {
+      ((ref as React.MutableRefObject<unknown>).current as HTMLElement).scrollIntoView({ behavior: 'smooth' });
     }
-  }, []);
+  }, [ref]);
 
   const exportToExcel = async () => {
     const workbook = new Workbook();
@@ -107,12 +122,13 @@ const MetricValueTable = forwardRef(({ data }, ref) => {
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
                     {currentData.map((item, index) => {
-                      const date = new Date(item.year);
-                      const formattedDate = `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`;
+                      const isoDate = new Date(item.year);
+                      const formattedDate = `${isoDate.getDate()}.${isoDate.getMonth() + 1}.${isoDate.getFullYear()}`;
+
                       return (
                         <tr key={index} className="hover:bg-gray-50">
                           <td className="px-4 py-4 text-sm font-medium whitespace-nowrap">
-                            <div className="inline px-3 py-1 text-sm font-normal text-gray-500 bg-gray-100 rounded-full dark:text-gray-400 gap-x-2 dark:bg-gray-800">{formattedDate}</div>
+                          <div className="inline px-3 py-1 text-sm font-normal text-gray-500 bg-gray-100 rounded-full dark:text-gray-400 gap-x-2 dark:bg-gray-800">{formattedDate}</div>
                           </td>
                           <td className="px-4 py-4 text-sm font-medium whitespace-nowrap">
                             <div className="inline px-3 py-1 text-sm font-normal text-gray-500 bg-gray-100 rounded-full dark:text-gray-400 gap-x-2 dark:bg-gray-800">{item.region}</div>
@@ -121,7 +137,7 @@ const MetricValueTable = forwardRef(({ data }, ref) => {
                             <div className="inline px-3 py-1 text-sm font-normal text-gray-500 bg-gray-100 rounded-full dark:text-gray-400 gap-x-2 dark:bg-gray-800">{item.industry}</div>
                           </td>
                           {metricNames.map(metric => (
-                            <td key={metric} className="px-4 py-4 text-sm whitespace-nowrap">{item[metric] || 'N/A'}</td>
+                            <td key={metric} className="px-4 py-4 text-sm whitespace-nowrap">{(item[metric] as string) || 'N/A'}</td>
                           ))}
                         </tr>
                       );
@@ -184,5 +200,7 @@ const MetricValueTable = forwardRef(({ data }, ref) => {
     </div>
   );
 });
+
+MetricValueTable.displayName = 'MetricValueTable';
 
 export default MetricValueTable;

@@ -19,7 +19,7 @@ export default function DefaultNavbar() {
       <Navbar.Toggle />
       <Navbar.Collapse>
         <Navbar.Link href="http://damodaran.com/" target="_blank" className="inline-flex items-center text-base font-bold tracking-wide text-gray-800 md:hover:text-blue-700">
-          Damodaran's website<svg className="w-4 h-4 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10"><path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 5h12m0 0L9 1m4 4L9 9"/></svg>
+          Damodaran&apos;s website<svg className="w-4 h-4 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10"><path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 5h12m0 0L9 1m4 4L9 9"/></svg>
         </Navbar.Link>
       </Navbar.Collapse>
     </Navbar>
