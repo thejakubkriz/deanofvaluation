@@ -56,6 +56,29 @@ const MetricValueTable = forwardRef(({ data }: MetricValueTableProps, ref: React
     document.body.removeChild(link);
   };
 
+  const exportToCSV = () => {
+    // Prepare header
+    const header = ['Year', 'Region', 'Industry', ...metricNames];
+    let csvContent = header.join(",") + "\n";
+
+    // Prepare data rows
+    data.forEach(item => {
+      const date = new Date(item.year);
+      const formattedDate = `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`;
+      const rowData = [formattedDate, item.region, item.industry, ...metricNames.map(metric => item[metric] || 'N/A')];
+      csvContent += rowData.join(",") + "\n";
+    });
+
+    // Trigger download
+    const blob = new Blob([csvContent], { type: 'text/csv' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'dean_of_valuation_values.csv';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   const handlePrevious = () => {
     setCurrentPage(prev => Math.max(prev - 1, 1));
   };
@@ -102,6 +125,23 @@ const MetricValueTable = forwardRef(({ data }: MetricValueTableProps, ref: React
                 <line x1="12" y1="15" x2="12" y2="3"></line>
               </svg>
               <span>.xlsx</span>
+            </button>
+            <button onClick={exportToCSV} className="flex items-center justify-center w-1/2 px-5 py-2 text-sm tracking-wide text-white transition-colors duration-200 bg-blue-500 rounded-lg shrink-0 sm:w-auto gap-x-2 hover:bg-blue-600 dark:hover:bg-blue-500 dark:bg-blue-600">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="w-5 h-5"
+              >
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7 10 12 15 17 10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+              </svg>
+              <span>.csv</span>
             </button>
           </div>
         </div>
