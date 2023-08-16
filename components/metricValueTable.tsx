@@ -1,18 +1,20 @@
 import React, { useState, forwardRef, useEffect } from 'react';
 import { Workbook } from 'exceljs';
+import Select from 'react-tailwindcss-select';
 import {
   DataItem,
   GroupedDataItem,
   SelectOption,
   ProcessedDataItem,
-  MetricValueTableProps
+  MetricValueTableProps,
+  Option
 } from '../components/types';
 
 const MetricValueTable = forwardRef(({ data }: MetricValueTableProps, ref: React.Ref<HTMLDivElement>) => {
-  const ITEMS_PER_PAGE = 30;
   const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = Math.ceil(data.length / ITEMS_PER_PAGE);
+  const [itemsPerPage, setItemsPerPage] = useState(30); // New state for items per page
 
+  const totalPages = Math.ceil(data.length / itemsPerPage);
   const metricNamesSet = new Set<string>();
   data.forEach(item => {
     Object.keys(item).forEach(key => {
@@ -28,6 +30,14 @@ const MetricValueTable = forwardRef(({ data }: MetricValueTableProps, ref: React
       ((ref as React.MutableRefObject<unknown>).current as HTMLElement).scrollIntoView({ behavior: 'smooth' });
     }
   }, [ref]);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [data]);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [itemsPerPage]);
 
   const exportToExcel = async () => {
     const workbook = new Workbook();
@@ -87,9 +97,18 @@ const MetricValueTable = forwardRef(({ data }: MetricValueTableProps, ref: React
     setCurrentPage(prev => Math.min(prev + 1, totalPages));
   };
 
-  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-  const endIndex = startIndex + ITEMS_PER_PAGE;
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
   const currentData = data.slice(startIndex, endIndex);
+
+  const options = [
+    { value: '10', label: '10' },
+    { value: '30', label: '30' },
+    { value: '50', label: '50' },
+    { value: '100', label: '100' },
+    { value: '200', label: '200' },
+    { value: '500', label: '500' }
+  ];
 
   return (
     <div className="mb-12" ref={ref}>
@@ -101,11 +120,11 @@ const MetricValueTable = forwardRef(({ data }: MetricValueTableProps, ref: React
                 Search results
               </h2>
               <span className="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full dark:bg-gray-800 dark:text-blue-400">
-                values
+                {data.length}{' '}rows
               </span>
             </div>
             <p className="mt-1 text-sm text-gray-500 dark:text-gray-300">
-              Here are your search results. Modify your search for different outcomes or download as .xls.
+              Here are your search results. Modify your search for different outcomes or download as .xlsx.
             </p>
           </div>
           <div className="flex items-center mt-4 gap-x-3">
@@ -148,15 +167,15 @@ const MetricValueTable = forwardRef(({ data }: MetricValueTableProps, ref: React
         <div className="flex flex-col mt-6">
           <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-              <div className="overflow-x-auto border border-gray-200 dark:border-gray-700 md:rounded-lg scroll-container">
+            <div className="overflow-x-auto border border-gray-200 dark:border-gray-700 md:rounded-lg overflow-y-auto max-h-[75vh]">
                 <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                  <thead className="bg-gray-50 dark:bg-gray-800">
+                  <thead className="sticky top-0 bg-gray-50 dark:bg-gray-800">
                     <tr>
-                      <th className="py-3.5 px-4 text-sm font-semibold text-left rtl:text-right text-gray-500 dark:text-gray-400">Year</th>
-                      <th className="py-3.5 px-4 text-sm font-semibold text-left rtl:text-right text-gray-500 dark:text-gray-400">Region</th>
-                      <th className="py-3.5 px-4 text-sm font-semibold text-left rtl:text-right text-gray-500 dark:text-gray-400">Industry</th>
+                      <th className="sticky top-0 py-3.5 px-4 text-sm font-semibold text-left rtl:text-right text-gray-500 dark:text-gray-400 pb-2 bg-gradient-to-b from-transparent via-transparent to-slate-100 dark:to-gray-600">Year</th>
+                      <th className="sticky top-0 py-3.5 px-4 text-sm font-semibold text-left rtl:text-right text-gray-500 dark:text-gray-400 pb-2 bg-gradient-to-b from-transparent via-transparent to-slate-100 dark:to-gray-600">Region</th>
+                      <th className="sticky top-0 py-3.5 px-4 text-sm font-semibold text-left rtl:text-right text-gray-500 dark:text-gray-400 pb-2 bg-gradient-to-b from-transparent via-transparent to-slate-100 dark:to-gray-600">Industry</th>
                       {metricNames.map(metric => (
-                        <th key={metric} className="py-3.5 px-4 text-sm font-semibold text-left rtl:text-right text-gray-500 dark:text-gray-400">{metric}</th>
+                        <th key={metric} className="sticky top-0 py-3.5 px-4 text-sm font-semibold text-left rtl:text-right text-gray-500 dark:text-gray-400 pb-2 bg-gradient-to-b from-transparent via-transparent to-slate-100 dark:to-gray-600">{metric}</th>
                       ))}
                     </tr>
                   </thead>
@@ -188,8 +207,23 @@ const MetricValueTable = forwardRef(({ data }: MetricValueTableProps, ref: React
             </div>
           </div>
         </div>
-        <div className="mt-6 sm:flex sm:items-center sm:justify-between ">
-          <div className="text-sm text-gray-500 dark:text-gray-400">
+        <div className="mt-6 sm:flex sm:items-start sm:justify-between flex-col sm:flex-row">
+          <div className="flex items-center justify-center mt-4 gap-x-4 w-1/4 mx-auto sm:w-auto sm:mt-0 sm:mx-0">
+            <Select
+              value={options.find(option => option.value === itemsPerPage.toString()) || options[1]}
+              onChange={(selectedOption) => {
+                if (selectedOption && !Array.isArray(selectedOption)) {
+                  setItemsPerPage(Number((selectedOption as Option).value));
+                }
+              }}
+              options={options}
+              isMultiple={false}
+              isClearable={false}
+              isSearchable={false}
+              primaryColor={"gray"}
+            />
+          </div>
+          <div className="text-center mt-4 text-sm text-gray-500 dark:text-gray-400 w-full sm:mt-0 sm:w-auto">
             Page{" "}
             <span className="font-medium text-gray-700 dark:text-gray-100">
               {currentPage} of {totalPages}
