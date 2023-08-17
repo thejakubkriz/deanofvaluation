@@ -112,7 +112,7 @@ const MetricValueTable = forwardRef(({ data }: MetricValueTableProps, ref: React
 
   return (
     <div className="mb-12" ref={ref}>
-      <section className="container px-4 mx-auto">
+      <section className="container mx-auto">
         <div className="sm:flex sm:items-center sm:justify-between">
           <div>
             <div className="flex items-center gap-x-3">
@@ -127,8 +127,8 @@ const MetricValueTable = forwardRef(({ data }: MetricValueTableProps, ref: React
               Here are your search results. Modify your search for different outcomes or download as .xlsx.
             </p>
           </div>
-          <div className="flex items-center mt-4 gap-x-3">
-            <button onClick={exportToExcel} className="flex items-center justify-center w-1/2 px-5 py-2 text-sm tracking-wide text-white transition-colors duration-200 bg-blue-500 rounded-lg shrink-0 sm:w-auto gap-x-2 hover:bg-blue-600 dark:hover:bg-blue-500 dark:bg-blue-600">
+          <div className="flex items-center mt-4 gap-x-4 sm:mt-0">
+            <button onClick={exportToExcel} className="flex items-center justify-center w-1/2 px-5 py-2 text-sm text-white transition-colors duration-200 bg-blue-500 rounded-md sm:w-auto gap-x-2 hover:bg-blue-600 dark:hover:bg-blue-500 dark:bg-blue-600">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -145,7 +145,7 @@ const MetricValueTable = forwardRef(({ data }: MetricValueTableProps, ref: React
               </svg>
               <span>.xlsx</span>
             </button>
-            <button onClick={exportToCSV} className="flex items-center justify-center w-1/2 px-5 py-2 text-sm tracking-wide text-white transition-colors duration-200 bg-blue-500 rounded-lg shrink-0 sm:w-auto gap-x-2 hover:bg-blue-600 dark:hover:bg-blue-500 dark:bg-blue-600">
+            <button onClick={exportToCSV} className="flex items-center justify-center w-1/2 px-5 py-2 text-sm text-white transition-colors duration-200 bg-blue-500 rounded-md sm:w-auto gap-x-2 hover:bg-blue-600 dark:hover:bg-blue-500 dark:bg-blue-600">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -164,12 +164,11 @@ const MetricValueTable = forwardRef(({ data }: MetricValueTableProps, ref: React
             </button>
           </div>
         </div>
-        <div className="flex flex-col mt-6">
-          <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-            <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-            <div className="overflow-x-auto border border-gray-200 dark:border-gray-700 md:rounded-lg overflow-y-auto max-h-[75vh]">
-                <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                  <thead className="sticky top-0 bg-gray-50 dark:bg-gray-800">
+        <div className="flex flex-col mt-6 w-full">
+          <div className="py-2 w-full">
+            <div className="block w-full border border-gray-200 dark:border-gray-700 md:rounded-lg overflow-y-auto max-h-[75vh]">
+              <table className="min-w-full w-full divide-y divide-gray-200 dark:divide-gray-700 border-collapse">
+                <thead className="sticky top-0 bg-gray-50 dark:bg-gray-800 z-10">
                     <tr>
                       <th className="sticky top-0 py-3.5 px-4 text-sm font-semibold text-left rtl:text-right text-gray-500 dark:text-gray-400 pb-2 bg-gradient-to-b from-transparent via-transparent to-slate-100 dark:to-gray-600">Year</th>
                       <th className="sticky top-0 py-3.5 px-4 text-sm font-semibold text-left rtl:text-right text-gray-500 dark:text-gray-400 pb-2 bg-gradient-to-b from-transparent via-transparent to-slate-100 dark:to-gray-600">Region</th>
@@ -203,7 +202,6 @@ const MetricValueTable = forwardRef(({ data }: MetricValueTableProps, ref: React
                     })}
                   </tbody>
                 </table>
-              </div>
             </div>
           </div>
         </div>
