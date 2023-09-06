@@ -168,13 +168,13 @@ const MetricValueTable = forwardRef(({ data }: MetricValueTableProps, ref: React
           <div className="py-2 w-full">
             <div className="block w-full border border-gray-200 dark:border-gray-700 md:rounded-lg overflow-y-auto max-h-[75vh]">
               <table className="min-w-full w-full divide-y divide-gray-200 dark:divide-gray-700 border-collapse">
-                <thead className="sticky top-0 bg-gray-50 dark:bg-gray-800 z-10">
+                <thead className="top-0 bg-gray-50 dark:bg-gray-800 z-10">
                     <tr>
-                      <th className="sticky top-0 py-3.5 px-4 text-sm font-semibold text-left rtl:text-right text-gray-500 dark:text-gray-400 pb-2 bg-gradient-to-b from-transparent via-transparent to-slate-100 dark:to-gray-600">Year</th>
-                      <th className="sticky top-0 py-3.5 px-4 text-sm font-semibold text-left rtl:text-right text-gray-500 dark:text-gray-400 pb-2 bg-gradient-to-b from-transparent via-transparent to-slate-100 dark:to-gray-600">Region</th>
-                      <th className="sticky top-0 py-3.5 px-4 text-sm font-semibold text-left rtl:text-right text-gray-500 dark:text-gray-400 pb-2 bg-gradient-to-b from-transparent via-transparent to-slate-100 dark:to-gray-600">Industry</th>
+                      <th className="sticky top-0 py-3.5 px-4 text-sm font-semibold text-left rtl:text-right text-gray-500 dark:text-gray-400 pb-2 bg-gradient-to-b from-white to-slate-100 dark:to-gray-600">Year</th>
+                      <th className="sticky top-0 py-3.5 px-4 text-sm font-semibold text-left rtl:text-right text-gray-500 dark:text-gray-400 pb-2 bg-gradient-to-b from-white to-slate-100 dark:to-gray-600">Region</th>
+                      <th className="sticky top-0 py-3.5 px-4 text-sm font-semibold text-left rtl:text-right text-gray-500 dark:text-gray-400 pb-2 bg-gradient-to-b from-white to-slate-100 to-slate-100 dark:to-gray-600">Industry</th>
                       {metricNames.map(metric => (
-                        <th key={metric} className="sticky top-0 py-3.5 px-4 text-sm font-semibold text-left rtl:text-right text-gray-500 dark:text-gray-400 pb-2 bg-gradient-to-b from-transparent via-transparent to-slate-100 dark:to-gray-600">{metric}</th>
+                        <th key={metric} className="sticky top-0 py-3.5 px-4 text-sm font-semibold text-left rtl:text-right text-gray-500 dark:text-gray-400 pb-2 bg-gradient-to-b from-white to-slate-100 dark:to-gray-600">{metric}</th>
                       ))}
                     </tr>
                   </thead>
